@@ -1,6 +1,6 @@
 <template>
   <main class="py-7 h-screen px-8 flex gap-10">
-    <section class="w-96 px-6 py-6 font-medium h-full bg-white rounded-md">
+    <section class="w-[450px] px-6 py-6 font-medium h-full bg-white rounded-md">
       <h2>Welcome!</h2>
       <br />
       <span class="flex flex-col">
@@ -59,13 +59,14 @@
           :longitude="longitude"
           :latitude="latitude"
           @onDelete="deleteLocation"
+          @onLocate="locateUser"
         />
       </div>
     </section>
     <section
       class="w-full h-full shadow-md border bg-white px-9 py-6 border-gray-100 rounded-md"
     >
-      <MapUI />
+      <MapUI :centerLocation="centerLocation" />
     </section>
   </main>
 </template>
@@ -76,6 +77,8 @@ import { UserLocationInformationType } from "../types/types";
 import MapUI from "../components/MapUI.vue";
 import getUserCoords from "../utils/getUserCoords";
 import UserLocationInfo from "../components/UserLocationInfo.vue";
+
+let centerLocation = ref<Number[]>([]);
 
 let allLocations = ref<UserLocationInformationType[]>([
   { username: "Bob", longitude: 55.2322323, latitude: 32.324224 },
@@ -94,13 +97,19 @@ function addLocation() {
 }
 
 function deleteLocation(payload: UserLocationInformationType) {
-  console.log("eee", payload);
   allLocations.value = allLocations.value.filter(
     ({ username, longitude, latitude }) =>
       username !== payload.username ||
       longitude !== payload.longitude ||
       latitude !== payload.latitude
   );
+}
+
+function locateUser(payload: UserLocationInformationType) {
+  console.log(payload);
+  if (payload.latitude !== null && payload.longitude !== null) {
+    centerLocation.value = [payload.longitude, payload.latitude];
+  }
 }
 
 onMounted(() => {

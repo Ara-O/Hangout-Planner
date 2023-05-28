@@ -3,3 +3,8 @@ export type UserLocationInformationType = {
   longitude: number | null;
   latitude: number | null;
 };
+
+export type LocationType = {
+  longitude: number | null;
+  latitude: number | null;
+};
