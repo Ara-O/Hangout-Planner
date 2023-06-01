@@ -71,9 +71,15 @@
         @calculateDistance="calculateDistance"
       />
       <div class="px-10">
-        <h5 class="text-sm">
-          How it works: Select a point on the map and click the 'Calculate
-          Distance' button. It will generate routes
+        <h5 class="text-sm leading-6 font-normal mb-4">
+          Note: This is a rough demo
+        </h5>
+
+        <h5 class="text-sm leading-6 font-normal">
+          How To Use: Add the latitude and longitude position of your friends in
+          the section to the left. Then select a potential hangout spot on the
+          map. Clicking the calculate distance button will show how far the
+          hangout spot is for you or your friends.
         </h5>
         <div v-for="locationTime in locationTimes">
           <div
@@ -103,9 +109,7 @@ import getUserCoords from "../utils/getUserCoords";
 import UserLocationInfo from "../components/UserLocationInfo.vue";
 
 let centerLocation = ref<Number[]>([]);
-let allLocations = ref<UserLocationInformationType[]>([
-  { username: "Bob", longitude: 55.2322323, latitude: 32.324224 },
-]);
+let allLocations = ref<UserLocationInformationType[]>([]);
 let locationTimes = ref<{ username: string; duration: number }[]>([]);
 let currentUserLocation = reactive<UserLocationInformationType>({
   username: "",
@@ -118,7 +122,7 @@ function addLocation() {
 }
 
 function formatDuration(duration: number): string {
-  return `${(duration / 60).toFixed(1)} mins`;
+  return `${(duration / 60).toFixed(1)} minutes away`;
 }
 
 function calculateDistance(desiredLocation: { long: number; lat: number }) {
